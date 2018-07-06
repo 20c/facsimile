@@ -1,0 +1,167 @@
+
+bigfut.py:    self.install_files(self.export_dir)
+portal.py:    self.install_files(self.export_dir, self.src_dir)
+zenfire.py:    self.install_files(os.path.join(self.release_dir, self.fq_release_name))
+
+isntall should always default to deploy_dir, tmpl can override to release dir if it wants
+  makes a lot more sense, and is easier to understand
+
+scopy == smart copy (minify, etc unless fax.debug_info)
+
+maybe property for that, so can minify tmpl output
+  never
+  smart
+  always
+
+content chain?
+  tmpl | minify | compress 
+
+transform chain for paths
+
+TMP:
+  dir_group():
+  file_group():
+    for each copy type
+
+source chain
+  glob | skip |
+
+### defaults
+## tmpl def dir? (maybe should be build dir as well)
+## files build dir
+## XXX for non build projects like py, build should just cp -a the source tree - then any modifications aren't done in the "pure" source
+## everything then could default to build dir, for cmake, et al, either make an install rule that copies to the "stage" like normal, or do {{fax.src_dir}}
+
+
+
+
+dest defaults to deploy
+group ::= <type><source><dest>
+name ::= <identifier>
+type ::= copy|tmpl|scopy
+modifer ::= pattern/replace
+source ::= <source> files|optfiles|dir|glob|regex
+recurse ::= bool
+
+// regex for files to skip
+
+groupdef:
+
+*source
+  files:
+  optfiles:
+  recurse: dir
+
+  type: copytype
+  source : optoin
+
+group0:
+  type: copy
+  glob: *
+  files:
+    - file0
+    - file1
+  optfiles:
+    - ifexists0
+    - ifexists1
+
+{       
+"install": [
+//  "install_files" : [
+// files relative to build dir
+    {
+    "type": "files"
+    "glob": "*",
+    "dir": "stage",
+    "pattern": "^stage/",
+    "replace": ""
+    },
+        {
+        "type": "files",
+        "system": "linux",
+        "pattern": "^%BUILDDIRNAME%/",
+        "replace": "lib64/",
+        "files": [
+          "%BUILDDIRNAME%/libzenfire.a",
+          "%BUILDDIRNAME%/libtwentyc.a",
+          "%BUILDDIRNAME%/libzenfire.so",
+          "%BUILDDIRNAME%/libtwentyc.so"
+          ]
+        },
+"type": "copy"
+    {
+    "type": "files"
+    "pattern": "^%SRCDIRNAME%/",
+    "replace": "",
+    "files": [
+      "%SRCDIRNAME%/README.txt",
+      "%SRCDIRNAME%/CHANGES.txt"
+      ]
+    },
+    {
+    "type": "tmpl",
+// templates relative to define_dir unless abs or ./ ../
+    "dir": "tmpl"
+"render_files": true
+// regex for files to skip
+"skip": 
+    }
+    ],
+
+  "system_files" : {
+    "linux":
+      [
+        {
+        "pattern": "^%BUILDDIRNAME%/",
+        "replace": "lib64/",
+        "files": [
+          "%BUILDDIRNAME%/libzenfire.a",
+          "%BUILDDIRNAME%/libtwentyc.a",
+          "%BUILDDIRNAME%/libzenfire.so",
+          "%BUILDDIRNAME%/libtwentyc.so"
+          ]
+        }
+      ],
+    "windows":
+      [
+        {   
+        "pattern": "^%BUILDDIRNAME%/",
+        "replace": "lib64/",
+        "files": [
+          "%BUILDDIRNAME%/%CONFIGURATION_NAME%/zenfire.lib",
+          "%BUILDDIRNAME%/%CONFIGURATION_NAME%/twentyc.lib"
+          ],
+        "optfiles": [
+          "%BUILDDIRNAME%/libeay32.lib",
+          "%BUILDDIRNAME%/ssleay32.lib",
+          "%BUILDDIRNAME%/libeay32MD.lib",
+          "%BUILDDIRNAME%/ssleay32MD.lib",
+          "%BUILDDIRNAME%/libeay32MDd.lib",
+          "%BUILDDIRNAME%/ssleay32MDd.lib"
+          ]
+        }
+      ]
+    }
+}
+
+
+
+legacu:
+
+-    def install_files(self, dst_dir, src_dir=None):
+-        if not os.path.exists(dst_dir):
+-            self.mkdir(dst_dir)
+-
+-        if not src_dir:
+-            src_dir = self.fq_build_dir
+-
+-        self.chdir(src_dir)
+-
+-        if "install_files" in self.defined:
+-            for each in self.defined['install_files']:
+-                self._package_group(each, dst_dir)
+-
+-        if "system_files" in self.defined:
+-            for each in self.defined['system_files'][self.system]:
+-                self._package_group(each, dst_dir)
+

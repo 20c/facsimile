@@ -1,0 +1,49 @@
+
+{
+"facsimile":
+  {
+  },
+
+"install":
+  {
+  "groups": [
+    {
+    "type": "tmpl",
+    "dir": "tmpl",
+    "render_files": true,
+    "skip": "^\\."
+    },
+    {
+    "type": "copy",
+    "files":
+      [
+      "$SRC_DIR$/base.file"
+      ]
+    },
+    {
+    "type": "copy",
+    "pattern": "^$SRC_DIR$/rpl/",
+    "replace": "RPL/",
+    "files":
+      [
+      "$SRC_DIR$/rpl/rpl.file"
+      ]
+    }
+
+  ]
+  },
+
+"deploy":
+  {
+  "user": "proj0",
+  "nodes":
+    {
+    "gateway":
+      [
+      "remove"
+      ]
+    }
+  }
+}
+
+

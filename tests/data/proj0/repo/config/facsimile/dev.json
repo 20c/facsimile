@@ -1,0 +1,29 @@
+
+{
+"home": "dev-out",
+
+"db":
+  {
+  "host": "localhost"
+  },
+
+"contact" :
+  {
+  "recipient" : "dev@example.com",
+  "sender" : "dev@example.com"
+  },
+
+"deploy":
+  {
+  "user": "devuser",
+  "nodes":
+    {
+    "gateway":
+      [
+      "localhost"
+      ]
+    }
+  }
+}
+
+

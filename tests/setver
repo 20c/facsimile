@@ -1,0 +1,28 @@
+#!/bin/sh
+
+repo=$1
+ver=$2
+
+if test -z "$repo"; then
+  echo no repo
+  exit 1
+fi
+if test -z "$ver"; then
+  echo no ver
+  exit 1
+fi
+
+version_file=config/VERSION
+
+cd $repo
+
+if test ! -f "$version_file"; then
+  echo no version file
+  exit 1
+fi
+
+echo "$ver" > $version_file
+git commit $version_file -m "set version $ver"
+git tag -a $ver -m "version $ver"
+
+

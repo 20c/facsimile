@@ -1,0 +1,55 @@
+
+{       
+  "install_files" : [
+    {
+    "glob": "*",
+    "dir": "stage",
+    "pattern": "^stage/",
+    "replace": ""
+    },
+    {
+    "pattern": "^%SRCDIRNAME%/",
+    "replace": "",
+    "files": [
+      "%SRCDIRNAME%/README.txt",
+      "%SRCDIRNAME%/CHANGES.txt"
+      ]
+    }
+    ],
+
+  "system_files" : {
+    "linux":
+      [
+        {
+        "pattern": "^%BUILDDIRNAME%/",
+        "replace": "lib64/",
+        "files": [
+          "%BUILDDIRNAME%/libzenfire.a",
+          "%BUILDDIRNAME%/libtwentyc.a",
+          "%BUILDDIRNAME%/libzenfire.so",
+          "%BUILDDIRNAME%/libtwentyc.so"
+          ]
+        }
+      ],
+    "windows":
+      [
+        {   
+        "pattern": "^%BUILDDIRNAME%/",
+        "replace": "lib64/",
+        "files": [
+          "%BUILDDIRNAME%/%CONFIGURATION_NAME%/zenfire.lib",
+          "%BUILDDIRNAME%/%CONFIGURATION_NAME%/twentyc.lib"
+          ],
+        "optfiles": [
+          "%BUILDDIRNAME%/libeay32.lib",
+          "%BUILDDIRNAME%/ssleay32.lib",
+          "%BUILDDIRNAME%/libeay32MD.lib",
+          "%BUILDDIRNAME%/ssleay32MD.lib",
+          "%BUILDDIRNAME%/libeay32MDd.lib",
+          "%BUILDDIRNAME%/ssleay32MDd.lib"
+          ]
+        }
+      ]
+    }
+}
+

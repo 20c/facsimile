@@ -1,0 +1,29 @@
+
+{
+"home": "beta-dir",
+
+"db":
+  {
+  "host": "localhost"
+  },
+
+"contact" :
+  {
+  "recipient" : "beta@example.com",
+  "sender" : "beta@example.com"
+  },
+
+"deploy":
+  {
+  "user": "devuser",
+  "nodes":
+    {
+    "gateway":
+      [
+      "localhost"
+      ]
+    }
+  }
+}
+
+

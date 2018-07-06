@@ -1,0 +1,33 @@
+
+{
+"facsimile":
+  {
+  },
+
+"install":
+  {
+  "groups": [
+    {
+    "type": "tmpl",
+    "dir": "tmpl",
+    "render_files": true,
+    "skip": "^\\."
+    }
+
+  ]
+  },
+
+"deploy":
+  {
+  "user": "betapdb",
+  "nodes":
+    {
+    "gateway":
+      [
+      "webqa0.ch0.mgmt.20c.com"
+      ]
+    }
+  }
+}
+
+

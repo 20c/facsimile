@@ -1,0 +1,26 @@
+
+[
+  {
+  "name": "proj0",
+  "genconfig": false,
+  "write_sql": true,
+
+  "xbahn":
+    {
+    "exchange": "twentyc.proj0"
+    },
+
+  "db":
+    {
+    "name": "proj0",
+
+    "selectable":
+      [
+      ]
+    }
+
+  }
+
+]
+
+
