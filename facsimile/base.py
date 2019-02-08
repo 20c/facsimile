@@ -549,7 +549,8 @@ class Base(object):
     def _deploy_postcmd(self, deploy):
         return ';'.join(deploy.get('postcmd', []))
 
-    def _deploy_rsync(self, src, dst, opts=[]):
+    def _deploy_rsync(self, src, dst, opts=None):
+        opts = list(opts)
         self.rsync(src, dst, opts)
 
         # check for self.name in deploy dir and do a second rsync with --delete
@@ -566,7 +567,6 @@ class Base(object):
 
         fc = FileCompare(self)
 
-        print self.deploy_dir
         rv, out, err = self.call_get_output(
             [
                 'sh', '-c', 'find %s -type f|grep -v "/\.debug/"|xargs -L1 file|grep "ELF %d"|grep "LSB executable"|cut -f1 -d:' %
