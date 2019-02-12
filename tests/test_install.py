@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 import filecmp
 import imp
@@ -77,6 +78,6 @@ def test_install(fax):
 
     expected_dir = os.path.join(util.data_dir, 'proj0', 'expected.beta', 'proj0')
 
-    print fax.release_dir
+    print(fax.release_dir)
     fstest.cmpdirs(expected_dir, fax.release_dir)
 

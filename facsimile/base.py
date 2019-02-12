@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 ##########################################################################
 
+from __future__ import print_function
+from __future__ import absolute_import
 from optparse import OptionParser, OptionGroup
 import errno
 import os
@@ -20,7 +22,7 @@ import hashlib
 import time
 import twentyc.tmpl
 
-import codec
+from . import codec
 from .definition import Definition
 from .state import State
 from .install import Install
@@ -66,10 +68,10 @@ class FileCompare(object):
 
         if missing:
             for missed in missing:
-                print 'libcheck FAILURE for presence of %s on %s' % (missed, host)
+                print('libcheck FAILURE for presence of %s on %s' % (missed, host))
             return False
         else:
-            print 'libcheck ok for %s' % host
+            print('libcheck ok for %s' % host)
             return True
 
 default_top_dir = os.path.join(os.getcwd(), '.facsimile')
@@ -473,7 +475,7 @@ class Base(object):
         return codec.load_datafile(name, search_path, **kwargs)
 
     def find_define_dir(self):
-		# FIXME - replace with find_initial util func
+        # FIXME - replace with find_initial util func
         return os.path.join(self.src_dir, 'config', 'facsimile')
         for name in ('facsimile', 'config'):
             define_dir = os.path.join(self.src_dir, name)
@@ -562,7 +564,7 @@ class Base(object):
 
     def libcheck_to(self, target):
         if self.skip_libcheck:
-            print 'WARNING: skipped libcheck stage due to use of --skip-libcheck.'
+            print('WARNING: skipped libcheck stage due to use of --skip-libcheck.')
             return
 
         fc = FileCompare(self)
@@ -619,7 +621,7 @@ class Base(object):
                 raise Exception(
                     "Failed libcheck on node(s) %s. Aborting." % (', '.join(nodes_failed)))
         else:
-            print 'skipping libcheck, on local machine.'
+            print('skipping libcheck, on local machine.')
 
     ##########################################################################
 
@@ -641,9 +643,9 @@ class Base(object):
 
     @property
     def write_codec(self):
-	if self.__write_codec:
-	    return self.__write_codec
-	return self.codec
+        if self.__write_codec:
+            return self.__write_codec
+        return self.codec
 
     @property
     def chatty(self):
@@ -665,28 +667,28 @@ class Base(object):
         return self.defined["deploy"]["nodes"].items()
 
     def print_summary(self):
-        print "Summary"
+        print("Summary")
         #print "home ", self.defined['home']
 
         for attr in self.summary_attrs:
-            print "%s: %s" % (attr, str(getattr(self, attr, None)))
+            print("%s: %s" % (attr, str(getattr(self, attr, None))))
 
-        print "version=%s instance=%s" % (self.version, self.release_environment)
+        print("version=%s instance=%s" % (self.version, self.release_environment))
         return 0
 
     def print_list_codecs(self):
-        print codec.list_codecs()
+        print(codec.list_codecs())
         return 0
 
     def print_list_nodes(self):
         try:
-            print '\nNodes that this instance uses:'
+            print('\nNodes that this instance uses:')
             for node, nodes in self.list_nodes():
-                print '%s:' % node
+                print('%s:' % node)
                 for n in nodes:
-                    print '  %s' % n
+                    print('  %s' % n)
         except KeyError:
-            print 'cannot determine nodes, you are probably doing a localhost push.'
+            print('cannot determine nodes, you are probably doing a localhost push.')
 
         return 0
 
@@ -751,13 +753,13 @@ class Base(object):
         return 0
 
     def status_msg(self, msg):
-        print ": " + msg
+        print(": " + msg)
 
     def debug_msg(self, msg):
-        print "# " + msg
+        print("# " + msg)
 
     def cmd_msg(self, msg):
-        print "+ " + msg
+        print("+ " + msg)
 
     def chdir(self, *args):
         name = os.path.join(*args)
@@ -787,7 +789,7 @@ class Base(object):
         name = os.path.join(*args)
 
         if self.__dry_run:
-            print "+ rmdir " + name
+            print("+ rmdir " + name)
             return
 
         if self.__debug:
@@ -897,7 +899,7 @@ class Base(object):
     def write_version(self, filename=None):
         if not filename:
             dir = os.path.join(self.deploy_dir, "etc")
-            print "mkdir ", dir
+            print("mkdir ", dir)
             self.mkdir(dir)
             filename = os.path.join(dir, self.name + ".version")
 
@@ -1014,7 +1016,7 @@ class Base(object):
                 # of this script, it's important not to leave a master checkout
                 # there for instance
                 if os.path.exists(dst):
-                    print 'failed checkout checkout, removing %s as it was not properly checked out' % dst
+                    print('failed checkout checkout, removing %s as it was not properly checked out' % dst)
                     shutil.rmtree(dst)
 
         os.chdir(ocwd)

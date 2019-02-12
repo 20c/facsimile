@@ -16,4 +16,3 @@ def clean_gen():
         shutil.rmtree(gen_tmp)
     yield
     #assert "RM" == util.top_parent_dir
-

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 ##########################################################################
 
+from __future__ import print_function
 import copy
 import os
 import uuid
@@ -107,12 +108,12 @@ class State(object):
                 try:
                     n_instances = envmods[each["name"]][
                         "service"]["n_instances"]
-                    print 'got %d for %s instance count' % (n_instances, each["name"])
+                    print('got %d for %s instance count' % (n_instances, each["name"]))
                 except KeyError:
                     try:
-                        print 'envmods only had %s for %s...' % (envmods[each["name"]], each['name'])
+                        print('envmods only had %s for %s...' % (envmods[each["name"]], each['name']))
                     except KeyError:
-                        print 'no envmods for %s' % each['name']
+                        print('no envmods for %s' % each['name'])
 
                 for instance_number in range(n_instances):
                     # here is where we want to set up the multiple instances
@@ -126,7 +127,7 @@ class State(object):
                         # this may end up being overly complex in the end; need
                         # to revisit later.
 
-                        print 'CLONING instance!'
+                        print('CLONING instance!')
 
                         each = copy.deepcopy(each)
                         fresh_modules.append(each)
