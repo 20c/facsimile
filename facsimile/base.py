@@ -552,7 +552,7 @@ class Base(object):
         return ';'.join(deploy.get('postcmd', []))
 
     def _deploy_rsync(self, src, dst, opts=None):
-        opts = list(opts)
+        opts = list(opts or [])
         self.rsync(src, dst, opts)
 
         # check for self.name in deploy dir and do a second rsync with --delete
